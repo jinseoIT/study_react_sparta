@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>오늘의 투두</title>
+</head>
+<style>
+  #title {
+    color: blue;
+    text-decoration: underline;
+  }
+
+  .wrap__area {
+    display: flex    
+  }
+
+  .wrap {
+    display: flex;
+    flex-direction: column;
+  }
+
+ .todo-card {
+   border: 1px solid gray;
+   padding: 2em;
+   margin: 1em;
+   border-radius: 5px;
+ }
+
+
+ button {
+   width: calc(80% - 20px);
+ }
+ button:hover {
+   background-color: orange;
+ }
+</style>
+<body>
+<h1 id="title">오늘의 할일</h1>
+
+<div class="wrap__area">
+
+    <div class="wrap">
+      
+      <div class="todo-card">
+      <h2 >고양이 밥주기</h2>
+      <button onclick="changeBackgroundColor(0)">완료</button>
+    </div>
+
+    <div class="todo-card">
+    <h2>장보기</h2>
+    <button onclick="changeBackgroundColor(1)">완료</button>
+    </div>
+  
+</div>
+
+  <div class="add__area">
+    <input type="text" placeholder="입력하기..." id="todoValue"/>
+    <button onClick="addTodo()">추가</button>
+  </div>
+</div>
+
+
+
+  <script>
+  
+    function addTodo(){
+      const todo = document.getElementById('todoValue').value
+      appendTodo(todo);
+    }
+    
+    function changeBackgroundColor(index) {
+      let card = document.getElementsByClassName("todo-card")[index];
+      card.style.backgroundColor = 'gray';
+    }
+  
+
+    function appendTodo(todo){ 
+      if(todo == '') {
+        alert('할일을 추가해 주세요.')
+        return
+      }
+      let cards = document.getElementsByClassName("todo-card")
+      const length =cards.length
+      
+      const new_div = document.createElement("div");
+      const new_h2 = document.createElement('h2');
+      const new_button = document.createElement('button');
+      new_div.className = 'todo-card';
+      new_h2.textContent = todo;
+      new_button.textContent = '완료';
+      new_button.onclick= function() { 
+        changeBackgroundColor(length);
+      }
+      
+      new_div.appendChild(new_h2);
+      new_div.appendChild(new_button);
+
+      document.querySelector('.wrap').appendChild(new_div);
+    }
+  </script>
+</body>
+</html>
