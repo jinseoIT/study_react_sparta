@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import {addWordFB} from '../redux/modules/word';
+import {isLoaded ,addWordFB} from '../redux/modules/word';
 
 function AddPage() {
   const dispatch = useDispatch();
@@ -20,6 +20,7 @@ function AddPage() {
     wordInfo['word'] = word;
     wordInfo['description'] = description;
     wordInfo['example'] = example;
+    dispatch(isLoaded());
     dispatch(addWordFB(wordInfo));
     history.push('/');
   }

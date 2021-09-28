@@ -1,22 +1,20 @@
 import React from 'react';
-import {Route} from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import Home from './pages/Home'
 import AddDictionary from './pages/AddPage'
-import { db } from './config/firebase';
+import Spinner from './components/Spinner'
 
 function App() {
-  React.useEffect(() => {
-    console.log(db);
-  })
-  
+  const is_loaded = useSelector(state => state.word.is_loaded);
+
   return (
     <>
-      <Route path="/" exact>
-        <Home />
-      </Route>
-      <Route path="/addDictionary" exact>
-        <AddDictionary />
-      </Route>
+    <Switch>
+      {!is_loaded && <Spinner/>}
+      <Route path="/" component={Home} exact/>
+      <Route path="/addDictionary" component={AddDictionary} />
+    </Switch>
     </>
   );
 }

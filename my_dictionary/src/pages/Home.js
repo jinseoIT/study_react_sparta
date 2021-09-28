@@ -3,20 +3,17 @@ import Card from '../components/Card';
 import styled from 'styled-components';
 import {useHistory} from 'react-router-dom';
 import { useDispatch , useSelector } from 'react-redux';
-import {getWordsFB} from '../redux/modules/word'
+import {isLoaded, getWordsFB} from '../redux/modules/word'
 
 function Main() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const wordList = useSelector((state) => state.word.wordList)
-  console.log(wordList);
-
+  const wordList = useSelector(state => state.word.wordList)
   React.useEffect(() => {
-    console.log(wordList.length);
     if (wordList.length === 0) {
+      dispatch(isLoaded());
       dispatch(getWordsFB());
     }
-    console.log('useEffect자리');
   })
 
   return (
