@@ -1,5 +1,5 @@
 import { db } from '../../config/firebase';
-import { doc, updateDoc, collection, addDoc, getDocs, getDoc, deleteDoc, orderBy } from 'firebase/firestore';
+import { doc, query, updateDoc, collection, addDoc, getDocs, getDoc, deleteDoc, orderBy } from 'firebase/firestore';
 import getNowTimeStamp from '../../config/dateCalc';
 /* Action Types */
 const ADD_WORD = 'ADD_WORD';
@@ -29,7 +29,9 @@ export const addWordFB = (wordInfo) => {
 }
 export const getWordsFB = () => {
   return async (dispatch) => {
-    const word_data = await getDocs(collection(db, 'dictionary'), orderBy('nowDt', 'desc'));
+    const wordRef = collection(db, 'dictionary');
+    const q = query(wordRef, orderBy('nowDt', 'desc'));
+    const word_data = await getDocs(q);
     let wordList = [];
     word_data.forEach((doc) => {
       wordList.push({ id: doc.id, updateLock: true, ...doc.data() });

@@ -14,7 +14,7 @@ function Main() {
       dispatch(isLoaded());
       dispatch(getWordsFB());
     }
-  })
+  },[])
 
   return (
     <>
