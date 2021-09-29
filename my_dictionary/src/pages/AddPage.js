@@ -93,6 +93,7 @@ const BackBtn = styled.div`
   top: 0px;
   left: -10px;
   cursor: pointer;
+  line-height: 50px;
 `;
 
 export default AddPage
