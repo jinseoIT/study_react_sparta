@@ -8,8 +8,13 @@ import { isLoaded, getWordsFB , moreWorldListFB} from '../redux/modules/word';
 function Main() {
   const history = useHistory();
   const dispatch = useDispatch();
+
+  /* 단어 리스트 */
   const wordList = useSelector(state => state.word.wordList)
+  /* list 마지막의 timeStamp */
   const lastTimeStamp = useSelector(state => state.word.lastTimeStamp);
+  /* 더보기 가능 Yn */
+  const nextYn = useSelector(state => state.word.nextYn);
 
   React.useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -18,7 +23,7 @@ function Main() {
       dispatch(getWordsFB());
     }
     return () => {window.removeEventListener('scroll', handleScroll)}
-  }, [lastTimeStamp])
+  }, [lastTimeStamp, nextYn])
 
 
   const MoreList = () => {
@@ -29,12 +34,12 @@ function Main() {
     const scrollHeight = document.documentElement.scrollHeight;
     const scrollTop = document.documentElement.scrollTop;
     const clientHeight = document.documentElement.clientHeight;
-
-    if (scrollTop + clientHeight >= scrollHeight) {
+    
+    if (scrollTop + clientHeight >= scrollHeight && nextYn) {
       MoreList();
     }
   }
-
+  
   return (
     <>
       <DictionaryArea>
@@ -50,7 +55,7 @@ function Main() {
           <UpBtn onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
             <i className="fas fa-arrow-up"></i>
           </UpBtn>
-          <AddDictionaryBtn onClick={()=> history.push('/addDictionary')}>
+          <AddDictionaryBtn onClick={() => history.push('/addDictionary')}>
             <i className="fas fa-plus"></i>
           </AddDictionaryBtn>
         </BtnArea>
@@ -90,7 +95,7 @@ const AddDictionaryBtn = styled.div`
 const UpBtn = styled.div`
   width: 45px;
   height: 45px;
-  background-color: purple;
+  background-color: #ec6422;
   color: #fff;
   font-size: 30px;
   cursor: pointer;

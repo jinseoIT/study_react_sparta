@@ -39,8 +39,12 @@ function Card(props) {
     <>
       <Wrap>
         <IconArea>
-          <a href="#!" onClick={updateLockToggle}><i className="fas fa-edit"></i></a>
-          <a href="#!" onClick={deleteWord}><i className="far fa-trash-alt"></i></a>
+          <a href="#!" onClick={updateLockToggle} style={{color:'#5b5757'}}>
+            <i className="fas fa-edit"></i>
+          </a>
+          <a href="#!" onClick={deleteWord} style={{color:'#ac1f5c'}}>
+            <i className="far fa-trash-alt"></i>
+          </a>
         </IconArea>
         <ContentsTitle>단어</ContentsTitle>
         <input
@@ -60,7 +64,7 @@ function Card(props) {
         <ContentsTitle>예시</ContentsTitle>
         <input type="text"
           name="example"
-          style={{color:'blue'}}
+          style={{color:'#0d4fbf'}}
           value={cardInfo.example}
           disabled={updateLock}
           onChange={handleChnage}
@@ -81,15 +85,22 @@ const Wrap = styled.div`
   width: 310px;
   height: 100%;
   background: #fff;
-  border: 1px solid #000;
+  /* border: 1px solid #1c1b19; */
+  box-shadow: 0px 10px 15px #9f9f9f;
+  border-radius: 10px;
   margin-bottom: 20px;
   border-radius: 4px;
-  padding: 10px;
+  padding: 10px 10px 10px 15px;
+  color: #4a535d;
     input {
       width: 96%;
+      border-radius: 6px;
     }
     input:last-child {
       color: blue;
+    }
+    textarea {
+      border-radius: 6px;
     }
 
 `;
@@ -122,6 +133,7 @@ const UpdateBtn = styled.button`
   border-radius: 4px;
   float: right;
   margin-top: 10px;
+  cursor: pointer;
 `;
 
 export default Card;

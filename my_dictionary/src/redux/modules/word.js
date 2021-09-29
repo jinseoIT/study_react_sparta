@@ -1,18 +1,21 @@
 import { db } from '../../config/firebase';
 import { doc, query, updateDoc, collection, addDoc, getDocs, getDoc, deleteDoc, orderBy, limit, startAfter } from 'firebase/firestore';
 import getNowTimeStamp from '../../config/dateCalc';
+
 /* Action Types */
 const ADD_WORD = 'ADD_WORD';
 const GET_WORD = 'GET_WORD';
 const UPDATE_WORD = 'UPDATE_WORD';
 const DELETE_WORD = 'DELETE_WORD';
-const IS_LOADED = 'IS_LOADED';
 const MORE_WORDLIST = 'MORE_WORDLIST';
-const ADD_WORDLIST_TEST = 'ADD_WORDLIST_TEST';
+const IS_LOADED = 'IS_LOADED';
+const NEXT_YN = 'NEXT_YN';
 
 const initialState = {
-  is_loaded: true,
-  wordList: []
+  is_loaded: false,
+  wordList: [],
+  nextYn: true,
+  viewScroll: 0
 }
 
 /*  middleWares */
@@ -71,7 +74,13 @@ export const moreWorldListFB = (lastTimeStamp) => {
     word_data.forEach((doc) => {
       wordList.push({ id: doc.id, updateLock: true, ...doc.data() });
     });
-  dispatch(moreWordList(wordList)) 
+    if (wordList.length !== 0) {
+      /* 추가 리스트가 있을 경우 */
+      dispatch(moreWordList(wordList));
+    } else {
+      /* 추가 리스트가 없을 경우 */
+      dispatch(nextYn());
+    }
   }
 }
 
@@ -93,23 +102,11 @@ export const deleteWord = (id) => {
 export const moreWordList = (wordList) => {
   return {type: MORE_WORDLIST, wordList}
 }
-export const addWordListTest = () => {
-  console.log('테스트 action');
-  const wordList = [];
-  for (let i = 0; i < 10; i += 1){
-    const wordObj = {
-      description: "테스트용입니다.",
-      example: "예시 테스트",
-      nowDt: 1632842165759,
-      word: "테스트용",
-      updateLock: true
-    }
-    wordList.push(wordObj);
-  }
-  return {type: ADD_WORDLIST_TEST, wordList}
-}
 export const isLoaded = () => {
   return {type: IS_LOADED}
+}
+export const nextYn = () => {
+  return {type: NEXT_YN}
 }
 
 
@@ -117,16 +114,15 @@ export const isLoaded = () => {
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case "ADD_WORD": {
-      return {...state, wordList:[action.wordInfo, ...state.wordList], is_loaded: true}
+      return {...state, wordList:[action.wordInfo, ...state.wordList], is_loaded: false}
     }
     case "GET_WORD": {
       const newList = action.wordList;
       const lastTimeStamp = newList[newList.length-1].nowDt;
-      //console.log('getTimeStmap', lastTimeStamp);
       return {
         ...state,
         wordList: [...state.wordList, ...action.wordList],
-        is_loaded: true,
+        is_loaded: false,
         lastTimeStamp : lastTimeStamp
       }
     }
@@ -138,20 +134,16 @@ export default function reducer(state = initialState, action = {}) {
         return {
           ...item,
           ...action.wordInfo,
-          is_loaded: true
+          is_loaded: false
         }
       })
-      return {...state, wordList: newWordList, is_loaded: true}
+      return {...state, wordList: newWordList, is_loaded: false}
     }
     case "DELETE_WORD": {
       const newWordList = state.wordList.filter(item => item.id !== action.id)
-      return {...state, wordList: newWordList, is_loaded: true}
-    }
-    case "IS_LOADED": {
-      return {...state, is_loaded: false}
+      return {...state, wordList: newWordList, is_loaded: false}
     }
     case "MORE_WORDLIST": {
-      console.log('reducer 4');
       const newList = action.wordList;
       const lastTimeStamp = newList[newList.length-1].nowDt;
       return {
@@ -160,8 +152,11 @@ export default function reducer(state = initialState, action = {}) {
         lastTimeStamp : lastTimeStamp
       }
     }
-    case "ADD_WORDLIST_TEST": {
-      return {...state, wordList:[...state.wordList, ...action.wordList]}
+    case "IS_LOADED": {
+      return {...state, is_loaded: true}
+    }
+    case "NEXT_YN": {
+      return {...state, nextYn: false}
     }
     default:
       return state;

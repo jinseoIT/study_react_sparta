@@ -7,7 +7,7 @@ a {
 button,
 input,
 textarea {
-  font-family: 'Karla', sans-serif;
+  font-family: "Apple SD Gothic Neo", "Nanum Barun Gothic", "Nanum Gothic", Verdana, Arial, "Malgun Gothic", Dotum, sans-serif;
   font-size: 16px;
 }
 
@@ -64,5 +64,10 @@ p {
 
 body {
   scroll-behavior: smooth;
-  font-family: 'Karla', sans-serif;
+  font-family: "Apple SD Gothic Neo", "Nanum Barun Gothic", "Nanum Gothic", Verdana, Arial, "Malgun Gothic", Dotum, sans-serif;
+  background-color: #CCCCFF;
+}
+
+h1 {
+  color: #4a535d;
 }

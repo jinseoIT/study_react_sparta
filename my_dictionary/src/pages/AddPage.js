@@ -50,7 +50,7 @@ const AddWrap = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   justify-content: center;
   align-items: center;
   
@@ -58,13 +58,21 @@ const AddWrap = styled.div`
 
 const ContentArea = styled.div`
   position: relative;
-  width: 350px;
+  background-color: #fff;
+  box-shadow: 0px 10px 15px #9f9f9f;
+  border-radius: 10px;
+  width: 340px;
+  padding: 10px;
   h1 {
     text-align: center;
   }
   input {
-    width: 100%;
+    width: 96%;
     padding: 0;
+    height: 25px;
+    border: 1px solid;
+    border-radius: 6px;
+    border-color: #b8b8b8;
   }
 `
 
@@ -82,18 +90,18 @@ const AddBtn = styled.button`
 `
 
 const BackBtn = styled.div`
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   background-color: royalblue;
   border-radius: 50%;
   color: #fff;
   text-align: center;
-  font-size: 35px;
+  font-size: 30px;
   position: absolute;
-  top: 0px;
-  left: -10px;
+  top: 10px;
+  left: 10px;
   cursor: pointer;
-  line-height: 50px;
+  line-height: 45px;
 `;
 
 export default AddPage

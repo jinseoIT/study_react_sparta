@@ -11,7 +11,7 @@ function App() {
   return (
     <>
     <Switch>
-      {!is_loaded && <Spinner/>}
+      {is_loaded && <Spinner/>}
       <Route path="/" component={Home} exact />
       <Route path="/addDictionary" component={AddDictionary} />
     </Switch>
